@@ -33,6 +33,10 @@ CORS(app)
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = openai.Client(api_key=OPENAI_API_KEY)
 
+@app.route('/health', methods=['GET'])
+def health_check():
+    return "OK", 200
+
 #When a user submits a form, return similar users and some potential activities
 @app.route('/submit', methods=['POST'])
 def submit():
