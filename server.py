@@ -187,4 +187,4 @@ def get_event(current_person, similar_people):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=8080)
