@@ -42,7 +42,7 @@ def health_check():
     return "OK", 200
 
 # #When a user submits a form, return similar users and some potential activities
-@app.route('/submit', methods=['POST', 'GET'])
+@app.route('/submit2', methods=['POST', 'GET'])
 #@cross_origin(origin='https://pair-recommender-client-6rb88.ondigitalocean.app', methods=['POST'])
 def submit():
     if request.method == 'POST':
@@ -64,6 +64,9 @@ def submit():
         #add_to_csv(data, our_people) add the new person to our csv. in real life we would add the user to a database
 
         return jsonify({'message': 'Data received successfully!', 'similar_people': similar_people, 'event_suggestions' : event_suggestions}), 200
+    
+    if request.method == 'GET':
+        return "got", 200
 
 # @app.route('/submit', methods=['POST', 'OPTIONS'])
 # def submit():
