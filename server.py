@@ -33,9 +33,9 @@ CORS(app, origins= "https://pair-recommender-client-6rb88.ondigitalocean.app")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = openai.Client(api_key=OPENAI_API_KEY)
 
-@app.route("/")
-def home():
-    return "Server is running!", 200
+# @app.route("/")
+# def home():
+#     return "Server is running!", 200
 
 @app.route('/health', methods=['GET'])
 def health_check():
@@ -65,8 +65,6 @@ def submit():
 
         return jsonify({'message': 'Data received successfully!', 'similar_people': similar_people, 'event_suggestions' : event_suggestions}), 200
 
-    if request.method == 'GET':
-        print("hello")
 
 # This function gets a weighted embedding of for a persons about me and personal traits. 
 # new_person is a dictionary with the information about a person
