@@ -73,7 +73,7 @@ def _build_cors_preflight_response():
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add('Access-Control-Allow-Headers', "*")
     response.headers.add('Access-Control-Allow-Methods', "*")
-    return response
+    return response, 200
 
 # @app.route('/submit', methods=['POST', 'OPTIONS'])
 # def submit():
