@@ -9,7 +9,7 @@
 # https://campus.datacamp.com/courses/introduction-to-embeddings-with-the-openai-api/embeddings-for-ai-applications?ex=5
 
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_cors import CORS, cross_origin
 import pandas as pd
 import pandas as pd
@@ -42,9 +42,11 @@ def health_check():
     return "OK", 200
 
 # #When a user submits a form, return similar users and some potential activities
-@app.route('api/submit2', methods=['POST', 'GET'])
+@app.route('/api/submit2', methods=['POST', 'GET'])
 #@cross_origin(origin='https://pair-recommender-client-6rb88.ondigitalocean.app', methods=['POST'])
 def submit():
+    if request.method == "OPTIONS": 
+        return _build_cors_preflight_response()
     if request.method == 'POST':
 
         data = request.get_json()
@@ -62,11 +64,16 @@ def submit():
         event_suggestions = get_event(data, similar_people) # get suggested events
 
         #add_to_csv(data, our_people) add the new person to our csv. in real life we would add the user to a database
+        response = jsonify({'message': 'Data received successfully!', 'similar_people': similar_people, 'event_suggestions' : event_suggestions})
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return 
 
-        return jsonify({'message': 'Data received successfully!', 'similar_people': similar_people, 'event_suggestions' : event_suggestions}), 200
-    
-    if request.method == 'GET':
-        return "got", 200
+def _build_cors_preflight_response():
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add('Access-Control-Allow-Headers', "*")
+    response.headers.add('Access-Control-Allow-Methods', "*")
+    return response
 
 # @app.route('/submit', methods=['POST', 'OPTIONS'])
 # def submit():
