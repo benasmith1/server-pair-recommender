@@ -33,9 +33,17 @@ CORS(app, origins= "https://pair-recommender-client-6rb88.ondigitalocean.app")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = openai.Client(api_key=OPENAI_API_KEY)
 
-@app.route("/api/" , methods=['GET'])
+@app.route("/api" , methods=['GET'])
 def home():
     return "Server is running!", 200
+
+@app.route("/" , methods=['GET'])
+def home():
+    return "Server is running!", 200
+
+@app.route("/test" , methods=['GET'])
+def home():
+    return "Test!", 200
 
 @app.route('/health', methods=['GET'])
 def health_check():
