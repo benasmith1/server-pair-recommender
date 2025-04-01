@@ -28,14 +28,14 @@ import os
 load_dotenv()  # Load variables from .env
 
 app = Flask(__name__)
-CORS(app, origins= "https://pair-recommender-client-6rb88.ondigitalocean.app/")
+CORS(app, origins= "https://pair-recommender-client-6rb88.ondigitalocean.app")
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = openai.Client(api_key=OPENAI_API_KEY)
 
-# @app.route("/")
-# def home():
-#     return "Server is running!", 200
+@app.route("/")
+def home():
+    return "Server is running!", 200
 
 @app.route('/health', methods=['GET'])
 def health_check():
@@ -43,7 +43,7 @@ def health_check():
 
 # #When a user submits a form, return similar users and some potential activities
 @app.route('/submit', methods=['POST', 'GET'])
-@cross_origin(origin='https://pair-recommender-client-6rb88.ondigitalocean.app', methods=['POST'])
+#@cross_origin(origin='https://pair-recommender-client-6rb88.ondigitalocean.app', methods=['POST'])
 def submit():
     if request.method == 'POST':
 
