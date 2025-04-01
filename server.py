@@ -42,42 +42,42 @@ def health_check():
     return "OK", 200
 
 # #When a user submits a form, return similar users and some potential activities
-# @app.route('/submit', methods=['POST', 'GET'])
-# @cross_origin(origin='https://pair-recommender-client-6rb88.ondigitalocean.app', methods=['POST'])
-# def submit():
-#     if request.method == 'POST':
-
-#         data = request.get_json()
-
-#         our_people = pd.read_csv("../notebooks/our_people.csv") # get existing profiles
-
-#         #print("Current person: ", data, "\n")
-
-#         new_person_embeddings = get_new_person_embeddings(data, our_people) # our_people is just sent in to get a unique id for the new person
-#         other_embeddings = our_people["Embeddings"]
-#         similar_embeddings = find_n_closest(new_person_embeddings, other_embeddings, 5) # get the top 5 closest embeddings to the current person
-#         similar_people = find_similar_people(similar_embeddings, our_people) # get the associated people
-#         #members(similar_people)
-
-#         event_suggestions = get_event(data, similar_people) # get suggested events
-
-#         #add_to_csv(data, our_people) add the new person to our csv. in real life we would add the user to a database
-
-#         return jsonify({'message': 'Data received successfully!', 'similar_people': similar_people, 'event_suggestions' : event_suggestions}), 200
-
-@app.route('/submit', methods=['POST', 'OPTIONS'])
+@app.route('/submit', methods=['POST', 'GET'])
+@cross_origin(origin='https://pair-recommender-client-6rb88.ondigitalocean.app', methods=['POST'])
 def submit():
-    if request.method == 'OPTIONS':
-        print("Preflight request received")
-        response = jsonify({'message': 'CORS preflight success'})
-        response.status_code = 200
-        return response
-
     if request.method == 'POST':
-        print("POST request received with data:", request.get_json())
+
         data = request.get_json()
-        # process the request
-        return jsonify({'message': 'Data received successfully!'}), 200
+
+        our_people = pd.read_csv("../notebooks/our_people.csv") # get existing profiles
+
+        #print("Current person: ", data, "\n")
+
+        new_person_embeddings = get_new_person_embeddings(data, our_people) # our_people is just sent in to get a unique id for the new person
+        other_embeddings = our_people["Embeddings"]
+        similar_embeddings = find_n_closest(new_person_embeddings, other_embeddings, 5) # get the top 5 closest embeddings to the current person
+        similar_people = find_similar_people(similar_embeddings, our_people) # get the associated people
+        #members(similar_people)
+
+        event_suggestions = get_event(data, similar_people) # get suggested events
+
+        #add_to_csv(data, our_people) add the new person to our csv. in real life we would add the user to a database
+
+        return jsonify({'message': 'Data received successfully!', 'similar_people': similar_people, 'event_suggestions' : event_suggestions}), 200
+
+# @app.route('/submit', methods=['POST', 'OPTIONS'])
+# def submit():
+#     if request.method == 'OPTIONS':
+#         print("Preflight request received")
+#         response = jsonify({'message': 'CORS preflight success'})
+#         response.status_code = 200
+#         return response
+
+#     if request.method == 'POST':
+#         print("POST request received with data:", request.get_json())
+#         data = request.get_json()
+#         # process the request
+#         return jsonify({'message': 'Data received successfully!'}), 200
 
 
 # This function gets a weighted embedding of for a persons about me and personal traits. 
