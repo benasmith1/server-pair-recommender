@@ -10,7 +10,7 @@
 
 
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 import pandas as pd
 import pandas as pd
 import openai
@@ -43,6 +43,7 @@ def health_check():
 
 #When a user submits a form, return similar users and some potential activities
 @app.route('/submit', methods=['POST'])
+@cross_origin
 def submit():
     data = request.get_json()
 
