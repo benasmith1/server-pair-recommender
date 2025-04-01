@@ -76,6 +76,9 @@ def submit():
         response.headers.add("Access-Control-Allow-Origin", "*")
         return response
 
+
+### following 3 functions are throwing the kitchen sink at a cors error so I can post to submit!!!
+# Niels B. on stack overflow https://stackoverflow.com/questions/25594893/how-to-enable-cors-in-flask
 @app.before_request
 def before_request():
     headers = {'Access-Control-Allow-Origin': '*',
@@ -97,20 +100,6 @@ def _build_cors_preflight_response():
     response.headers.add('Access-Control-Allow-Headers', "*")
     response.headers.add('Access-Control-Allow-Methods', "*")
     return response
-
-# @app.route('/submit', methods=['POST', 'OPTIONS'])
-# def submit():
-#     if request.method == 'OPTIONS':
-#         print("Preflight request received")
-#         response = jsonify({'message': 'CORS preflight success'})
-#         response.status_code = 200
-#         return response
-
-#     if request.method == 'POST':
-#         print("POST request received with data:", request.get_json())
-#         data = request.get_json()
-#         # process the request
-#         return jsonify({'message': 'Data received successfully!'}), 200
 
 
 # This function gets a weighted embedding of for a persons about me and personal traits. 
