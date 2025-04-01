@@ -43,7 +43,7 @@ def health_check():
 
 #When a user submits a form, return similar users and some potential activities
 @app.route('/submit', methods=['POST', 'GET'])
-@cross_origin
+@cross_origin(origin='https://pair-recommender-client-6rb88.ondigitalocean.app', methods=['POST'])
 def submit():
     if request.method == 'POST':
 
