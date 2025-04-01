@@ -37,7 +37,7 @@ client = openai.Client(api_key=OPENAI_API_KEY)
 def home():
     return "Server is running!", 200
 
-@app.route('/health', methods=['GET'])
+@app.route('api/health', methods=['GET'])
 def health_check():
     return "OK", 200
 
