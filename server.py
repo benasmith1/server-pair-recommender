@@ -59,7 +59,7 @@ def submit():
 
         data = request.get_json()
 
-        our_people = pd.read_csv("../notebooks/our_people.csv") # get existing profiles
+        our_people = pd.read_csv("our_people.csv") # get existing profiles
 
         #print("Current person: ", data, "\n")
 
