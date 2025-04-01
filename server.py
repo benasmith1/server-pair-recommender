@@ -33,7 +33,7 @@ CORS(app, origins= "https://pair-recommender-client-6rb88.ondigitalocean.app")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = openai.Client(api_key=OPENAI_API_KEY)
 
-@app.route("/check")
+@app.route("/")
 def home():
     return "Server is running!", 200
 
@@ -42,7 +42,7 @@ def health_check():
     return "OK", 200
 
 #When a user submits a form, return similar users and some potential activities
-@app.route('/', methods=['POST'])
+@app.route('/submit', methods=['POST'])
 def submit():
     data = request.get_json()
 
