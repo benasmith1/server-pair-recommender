@@ -74,7 +74,7 @@ def submit():
         #add_to_csv(data, our_people) add the new person to our csv. in real life we would add the user to a database
         response = jsonify({'message': 'Data received successfully!', 'similar_people': similar_people, 'event_suggestions' : event_suggestions})
         response.headers.add("Access-Control-Allow-Origin", "*")
-        return 
+        return response
 
 @app.before_request
 def before_request():
