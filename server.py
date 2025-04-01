@@ -34,7 +34,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = openai.Client(api_key=OPENAI_API_KEY)
 
 @app.route("/api" , methods=['GET'])
-def home():
+def api_test():
     return "Server is running!", 200
 
 @app.route("/" , methods=['GET'])
@@ -42,7 +42,7 @@ def home():
     return "Server is running!", 200
 
 @app.route("/test" , methods=['GET'])
-def home():
+def test():
     return "Test!", 200
 
 @app.route('/health', methods=['GET'])
