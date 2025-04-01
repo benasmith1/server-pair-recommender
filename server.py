@@ -42,26 +42,31 @@ def health_check():
     return "OK", 200
 
 #When a user submits a form, return similar users and some potential activities
-@app.route('/submit', methods=['POST'])
+@app.route('/submit', methods=['POST', 'GET'])
 @cross_origin
 def submit():
-    data = request.get_json()
+    if request.method == 'POST':
 
-    our_people = pd.read_csv("../notebooks/our_people.csv") # get existing profiles
+        data = request.get_json()
 
-    #print("Current person: ", data, "\n")
+        our_people = pd.read_csv("../notebooks/our_people.csv") # get existing profiles
 
-    new_person_embeddings = get_new_person_embeddings(data, our_people) # our_people is just sent in to get a unique id for the new person
-    other_embeddings = our_people["Embeddings"]
-    similar_embeddings = find_n_closest(new_person_embeddings, other_embeddings, 5) # get the top 5 closest embeddings to the current person
-    similar_people = find_similar_people(similar_embeddings, our_people) # get the associated people
-    #members(similar_people)
+        #print("Current person: ", data, "\n")
 
-    event_suggestions = get_event(data, similar_people) # get suggested events
+        new_person_embeddings = get_new_person_embeddings(data, our_people) # our_people is just sent in to get a unique id for the new person
+        other_embeddings = our_people["Embeddings"]
+        similar_embeddings = find_n_closest(new_person_embeddings, other_embeddings, 5) # get the top 5 closest embeddings to the current person
+        similar_people = find_similar_people(similar_embeddings, our_people) # get the associated people
+        #members(similar_people)
 
-    #add_to_csv(data, our_people) add the new person to our csv. in real life we would add the user to a database
+        event_suggestions = get_event(data, similar_people) # get suggested events
 
-    return jsonify({'message': 'Data received successfully!', 'similar_people': similar_people, 'event_suggestions' : event_suggestions}), 200
+        #add_to_csv(data, our_people) add the new person to our csv. in real life we would add the user to a database
+
+        return jsonify({'message': 'Data received successfully!', 'similar_people': similar_people, 'event_suggestions' : event_suggestions}), 200
+
+    if request.method == 'GET':
+        print("hello")
 
 # This function gets a weighted embedding of for a persons about me and personal traits. 
 # new_person is a dictionary with the information about a person
