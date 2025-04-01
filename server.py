@@ -46,7 +46,7 @@ def health_check():
 #@cross_origin(origin='https://pair-recommender-client-6rb88.ondigitalocean.app', methods=['POST'])
 def submit():
     if request.method == "OPTIONS": 
-        return _build_cors_preflight_response()
+        return '', 200
     if request.method == 'POST':
 
         data = request.get_json()
@@ -74,14 +74,21 @@ def before_request():
                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                'Access-Control-Allow-Headers': 'Content-Type'}
     if request.method.lower() == 'options':
-        return jsonify(headers), 200
-    
+        return jsonify(headers)
+
+@app.after_request
+def add_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    return response
+
 def _build_cors_preflight_response():
     response = make_response()
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add('Access-Control-Allow-Headers', "*")
     response.headers.add('Access-Control-Allow-Methods', "*")
-    return response, 200
+    return response
 
 # @app.route('/submit', methods=['POST', 'OPTIONS'])
 # def submit():
