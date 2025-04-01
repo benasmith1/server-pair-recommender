@@ -42,7 +42,7 @@ def health_check():
     return "OK", 200
 
 # #When a user submits a form, return similar users and some potential activities
-@app.route('/submit2', methods=['POST', 'GET'])
+@app.route('api/submit2', methods=['POST', 'GET'])
 #@cross_origin(origin='https://pair-recommender-client-6rb88.ondigitalocean.app', methods=['POST'])
 def submit():
     if request.method == 'POST':
