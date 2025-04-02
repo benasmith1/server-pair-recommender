@@ -1,0 +1,10 @@
+This is the Flask backend for my algorithm that recommends similar people to eachother. This algorithm can be used by 222 to make groups of people for events. 
+
+`grouping_people.ipynb` takes the `our_people.csv` dataframe that contains 300 simulated profiles of people. These profiles were created by ChatGPT so many of the bios and names are similar (names are not used in my algorithm) We can improve the creativity of these profiles with more intense prompting. Weights are given to the users' 'About Me,' 'Favorite_Music_Genres,''Outgoing,''Outdoorsy,''Politically_Correct,' and 'Religion' characteristics based on what I thought might be the most important. In the future, we can do more research on this or let users' choose these weights.
+
+OpenAI is used to get sentence embeddings of these text entries. These embeddings are vectors that are closer together when the sentences are more similar. For example, if someone is outgoing and likes EDM, their embedding will be very similar to somone who describes themself as an extrovert who likes electronic music and far from an introvert who likes classical music. I found a weighted average of these vectors for each people. 
+
+Then groups are made using K Nearest Neighbors on the vector embeddings. The closest vectors are grouped together. Using principal component analysis, the vector embeddings are reduced to 2 dimensions to view the graph in 2D. I made 10 groups of people. We can plan an event for each group!
+
+`server.py` receives a POST request from the client (https://github.com/benasmith1/pair-recommender/tree/main) containing a new user profile. It then calculated the vector embeddings the same way as we did previously. Then, the five closest vectors are returned based on cosine distance. These are the most similar users to the new user (hopefully). Then, these user's are sent to the OpenAI API with a prompt that asks for 3 events these people will like. This gives us inspiration when planning an event for them! These people and events are sent back to the client. 
+
