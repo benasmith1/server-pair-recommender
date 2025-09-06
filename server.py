@@ -9,7 +9,7 @@
 # https://campus.datacamp.com/courses/introduction-to-embeddings-with-the-openai-api/embeddings-for-ai-applications?ex=5
 
 
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request, jsonify, make_response, redirect, session, url_for
 from flask_cors import CORS, cross_origin
 import pandas as pd
 import pandas as pd
@@ -23,6 +23,8 @@ import json
 from flask import Flask
 from dotenv import load_dotenv
 import os
+import urllib.parse
+import requests
 
 
 load_dotenv()  # Load variables from .env
@@ -228,6 +230,54 @@ def get_event(current_person, similar_people):
     print(response)
     return response.choices[0].message.content.strip()
 
+SPOTIFY_CLIENT_ID = os.getenv("fcf8a648caea45e3b6bf2cb555181325")
+SPOTIFY_CLIENT_SECRET = os.getenv("66686230391d44b8b21264cc2d20c1a3")
+SPOTIFY_REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI", "http://127.0.0.1:8080/spotify/callback")
+
+SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize"
+SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
+SPOTIFY_API_BASE_URL = "https://api.spotify.com/v1"
+SPOTIFY_SCOPE = "playlist-read-private playlist-read-collaborative"
+
+@app.route("/spotify/login")
+def spotify_login():
+    auth_query = {
+        "response_type": "code",
+        "redirect_uri": SPOTIFY_REDIRECT_URI,
+        "scope": SPOTIFY_SCOPE,
+        "client_id": SPOTIFY_CLIENT_ID
+    }
+    url_args = urllib.parse.urlencode(auth_query)
+    auth_url = f"{SPOTIFY_AUTH_URL}?{url_args}"
+    return redirect(auth_url)
+
+@app.route("/spotify/callback")
+def spotify_callback():
+    code = request.args.get("code")
+    token_data = {
+        "grant_type": "authorization_code",
+        "code": code,
+        "redirect_uri": SPOTIFY_REDIRECT_URI,
+        "client_id": SPOTIFY_CLIENT_ID,
+        "client_secret": SPOTIFY_CLIENT_SECRET,
+    }
+    r = requests.post(SPOTIFY_TOKEN_URL, data=token_data)
+    token_info = r.json()
+
+    session["access_token"] = token_info.get("access_token")
+    session["refresh_token"] = token_info.get("refresh_token")
+
+    return redirect(url_for("spotify_playlists"))
+
+@app.route("/spotify/playlists")
+def spotify_playlists():
+    access_token = session.get("access_token")
+    if not access_token:
+        return redirect(url_for("spotify_login"))
+    
+    headers = {"Authorization": f"Bearer {access_token}"}
+    r = requests.get(f"{SPOTIFY_API_BASE_URL}/me/playlists", headers=headers)
+    return jsonify(r.json())
 
 
 if __name__ == "__main__":
