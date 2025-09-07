@@ -39,9 +39,7 @@ SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = openai.Client(api_key=OPENAI_API_KEY)
 
-if not SPOTIFY_CLIENT_ID or not SPOTIFY_CLIENT_SECRET:
-    raise RuntimeError("❌ Missing Spotify client ID or secret. "
-                       "Did you set SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET in DigitalOcean?")
+
 
 
 @app.route("/api" , methods=['GET'])
