@@ -39,7 +39,7 @@ SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = openai.Client(api_key=OPENAI_API_KEY)
 
-
+SPOTIFY_REDIRECT_URI = "https://pair-recommender-service-6oqt6.ondigitalocean.app/spotify/callback"
 
 
 @app.route("/api" , methods=['GET'])
