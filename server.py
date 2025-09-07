@@ -31,6 +31,7 @@ load_dotenv()  # Load variables from .env
 
 app = Flask(__name__)
 CORS(app, origins= "https://pair-recommender-client-6rb88.ondigitalocean.app")
+app.secret_key = os.getenv("FLASK_SECRET_KEY")
 
 SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
 SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
