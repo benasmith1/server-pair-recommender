@@ -32,6 +32,9 @@ load_dotenv()  # Load variables from .env
 app = Flask(__name__)
 CORS(app, origins= "https://pair-recommender-client-6rb88.ondigitalocean.app")
 
+SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
+SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
+
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 client = openai.Client(api_key=OPENAI_API_KEY)
 
@@ -232,7 +235,7 @@ def get_event(current_person, similar_people):
 
 SPOTIFY_CLIENT_ID = os.getenv("fcf8a648caea45e3b6bf2cb555181325")
 SPOTIFY_CLIENT_SECRET = os.getenv("66686230391d44b8b21264cc2d20c1a3")
-SPOTIFY_REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI", "http://127.0.0.1:8080/spotify/callback")
+SPOTIFY_REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI", "https://pair-recommender-service-6oqt6.ondigitalocean.app/spotify/callback")
 
 SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize"
 SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
