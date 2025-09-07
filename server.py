@@ -238,7 +238,7 @@ def get_event(current_person, similar_people):
     return response.choices[0].message.content.strip()
 
 
-SPOTIFY_REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI", "https://pair-recommender-service-6oqt6.ondigitalocean.app/spotify/callback")
+SPOTIFY_REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI")
 
 SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize"
 SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
