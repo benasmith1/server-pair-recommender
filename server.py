@@ -269,6 +269,7 @@ def spotify_callback():
     }
     r = requests.post(SPOTIFY_TOKEN_URL, data=token_data)
     token_info = r.json()
+    print("Spotify token response:", token_info)
 
     session["access_token"] = token_info.get("access_token")
     session["refresh_token"] = token_info.get("refresh_token")
