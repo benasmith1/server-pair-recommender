@@ -253,7 +253,12 @@ def spotify_login():
         "client_id": SPOTIFY_CLIENT_ID
     }
     url_args = urllib.parse.urlencode(auth_query)
+    
     auth_url = f"{SPOTIFY_AUTH_URL}?{url_args}"
+
+    print("DEBUG: Redirecting to Spotify with URL:")
+    print(auth_url)  # <--- log i
+
     return redirect(auth_url)
 
 @app.route("/spotify/callback")
