@@ -279,7 +279,7 @@ def spotify_callback():
     session["access_token"] = token_info.get("access_token")
     session["refresh_token"] = token_info.get("refresh_token")
 
-    return redirect("https://pair-recommender-client-6rb88.ondigitalocean.app/SpotifyConnect") 
+    return redirect("https://pair-recommender-client-6rb88.ondigitalocean.app") 
 
 @app.route("/spotify/playlists")
 def spotify_playlists():
