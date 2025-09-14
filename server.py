@@ -257,7 +257,7 @@ def spotify_login():
     auth_url = f"{SPOTIFY_AUTH_URL}?{url_args}"
 
     print("DEBUG: Redirecting to Spotify with URL:")
-    print(auth_url)  # <--- log i
+    print(auth_url) 
 
     return redirect(auth_url)
 
@@ -279,7 +279,7 @@ def spotify_callback():
     session["access_token"] = token_info.get("access_token")
     session["refresh_token"] = token_info.get("refresh_token")
 
-    return redirect(url_for("spotify_playlists"))
+    return redirect("https://pair-recommender-client-6rb88.ondigitalocean.app/SpotifyConnect") 
 
 @app.route("/spotify/playlists")
 def spotify_playlists():
