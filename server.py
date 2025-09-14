@@ -283,6 +283,7 @@ def spotify_callback():
 
 @app.route("/spotify/playlists")
 def spotify_playlists():
+    print("in get playlists")
     access_token = session.get("access_token")
     if not access_token:
         return redirect(url_for("spotify_login"))
