@@ -87,27 +87,27 @@ def submit():
 
 ### following 3 functions are throwing the kitchen sink at a cors error so I can post to submit!!!
 # Niels B. on stack overflow https://stackoverflow.com/questions/25594893/how-to-enable-cors-in-flask
-@app.before_request
-def before_request():
-    headers = {'Access-Control-Allow-Origin': '*',
-               'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-               'Access-Control-Allow-Headers': 'Content-Type'}
-    if request.method.lower() == 'options':
-        return jsonify(headers)
+# @app.before_request
+# def before_request():
+#     headers = {'Access-Control-Allow-Origin': '*',
+#                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+#                'Access-Control-Allow-Headers': 'Content-Type'}
+#     if request.method.lower() == 'options':
+#         return jsonify(headers)
 
-@app.after_request
-def add_cors_headers(response):
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
-    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
-    return response
+# @app.after_request
+# def add_cors_headers(response):
+#     response.headers["Access-Control-Allow-Origin"] = "*"
+#     response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+#     response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+#     return response
 
-def _build_cors_preflight_response():
-    response = make_response()
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    response.headers.add('Access-Control-Allow-Headers', "*")
-    response.headers.add('Access-Control-Allow-Methods', "*")
-    return response
+# def _build_cors_preflight_response():
+#     response = make_response()
+#     response.headers.add("Access-Control-Allow-Origin", "*")
+#     response.headers.add('Access-Control-Allow-Headers', "*")
+#     response.headers.add('Access-Control-Allow-Methods', "*")
+#     return response
 
 
 # This function gets a weighted embedding of for a persons about me and personal traits. 
